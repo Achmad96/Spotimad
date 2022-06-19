@@ -23,7 +23,7 @@ add_btn.onchange = () => {
         songs.insertAdjacentHTML('beforeend', data);
         song.source = (window.URL || window.webkitURL).createObjectURL(file);
         list_song.push(song);
-    } else alert(`${file_name} bukanlah sebuah lagu.`);
+    } else alert(`${file.name} bukanlah sebuah lagu.`);
 };
 
 function selectSong(e){
