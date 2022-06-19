@@ -30,7 +30,7 @@ function selectSong(e){
     document.querySelectorAll(".selected-song").forEach(element => element.classList.remove("selected-song"));
     e.classList.add("selected-song");
     for (let i = 0; i < songs.childNodes.length; i++){
-        if (songs.childNodes[i]?.children[0] === e){
+        if (songs.childNodes[i].children[0] === e){
             index = i;
             break;
         };
@@ -64,6 +64,6 @@ audio.onplaying = () => console.log('Playing ' + songs.childNodes[index].childre
 audio.onended = () => {
     if (songs.childNodes.length - 1 > index) {
         index++;
-        selectSong(songs.childNodes[index]?.children[0]);
-    } else if (looping && index >= songs.childNodes.length - 1) selectSong(songs.childNodes[0]?.children[0]);   
+        selectSong(songs.childNodes[index].children[0]);
+    } else if (looping && index >= songs.childNodes.length - 1) selectSong(songs.childNodes[0].children[0]);   
 };
