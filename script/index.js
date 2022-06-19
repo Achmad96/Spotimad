@@ -13,7 +13,7 @@ add_btn.onchange = () => {
     if (file.type === 'audio/mpeg'){
         let song = {
             name: '',
-            source: null 
+            source: null
         };
         let song_names = file.name.split('.');
         for (let i = 0; i < song_names.length - 1; i++){
