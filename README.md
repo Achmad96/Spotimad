@@ -1,12 +1,13 @@
 # Spotimad
 
-### Pemutar musik sederhana menggunakan **Java Script**
+Pemutar musik sederhana dengan menggunakan **Html, Css, Java script**
 
+# Fitur yang tersedia
+Website ini memiliki beberapa fitur diantaranya adalah sebagai berikut.
 
-#### Fitur
-1.Looping
-> Memutar ulang lagu.
-#### 2.Autoplay
+## Loop
+> Memutar ulang sebuah lagu.
+## Autoplay
 > Memutar lagu secara otomatis.
-#### 3.Add file
+## Add file
 > Menambahkan lagu kedalam list.
