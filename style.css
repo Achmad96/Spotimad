@@ -4,30 +4,31 @@ body {
     background-color: #0d1137;
 }
 
-.container{
+div.container {
     display: grid;
     place-items: center;
     width: 100%;
     height: 100vh;
 }
 
-.wrapper {
+div.wrapper {
     background-color: #0d1137;
     place-items: center;
     font-family: Arial, Helvetica, sans-serif;
     padding: 0px;
 }
 
-.wrapper > p {
+div.wrapper > p {
+    background-color: white;
+    color: #0d1137;
+    border-radius: 10px;
     font-size: 30px;
     text-align: center;
-    color: #0d1137;
-    background-color: white;
     margin: 0px;
-    border-radius: 10px;
+    cursor: default;
 }
 
-.songs{
+ul.songs {
     background-color: #e52165;
     display: block;
     border-radius: 10px;
@@ -38,39 +39,39 @@ body {
     padding: 5px;
     margin: 5px;
     overflow: auto;
+    cursor: default;
 }
 
-li {
+ul.songs > li {
     margin: 10px;
 }
 
-span {
-    display: inline-block;
-    width: 95%;
+ul.songs > li > span {
     background-color: #0d1137;
+    display: inline-block;
     color: white;
     border-radius: 30px;
+    width: 95%;
     padding: 10px;
     transition: all .3s ease-in-out;
  }
 
-span:hover:not(.selected-song){
+ul.songs > li > span:hover:not(.selected-song) {
     background-color: #1e234d;
-    cursor: default;
     transition: all .3s ease-in-out;
 }
 
-span.selected-song{
+ul.songs > li > span.selected-song {
     background-color: #3d458a;
     transition: all .3s ease-in-out;
-}
+}   
 
-.buttons {
+div.buttons {
     display: flex;
     justify-content: center;
 }
 
-input[type="file"]{
+input[type="file"] {
     display: none;
 }
 
@@ -87,8 +88,44 @@ label, input[type='button'] {
     transition: all .3s ease-in-out;
 }
 
-label:hover, input[type="button"]:hover{
+label:hover, input[type="button"]:hover {
     background-color: #ac325d;
     color: rgb(185, 184, 184);
+    transition: all .3s ease-in-out;
+}
+
+div.content-wrapper{
+    display: none;
+    position: absolute;
+    width: 250px;
+    border-radius: 10px;
+    background: transparent;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.1);
+}
+
+ul.items {
+    font-family: 'Courier New', Courier, monospace;
+    background: #ffffff;
+    border-radius: 10px;
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+ul.items > li {
+    padding: 10px;
+    border-radius: 10px;
+    height: 20px;
+    width: 250px;
+    color: #0d1137;
+    background: #ffffff;
+    transition: all .3s ease-in-out;
+}
+
+ul.items > li:hover {
+    cursor: default;
+    color: #ffffff;
+    background: #0d1137;
+    margin-left: 3px;
     transition: all .3s ease-in-out;
 }
