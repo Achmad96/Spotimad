@@ -19,7 +19,7 @@ add_btn.onchange = () => {
         for (let i = 0; i < song_names.length - 1; i++){
             song.name += song_names[i] + '.';
         }
-        let data = `<li><span onclick=selectSong(this)>${song.name}</span></li>`;
+        let data = `<li><span onclick=selectSong(this)>${song.name.slice(0,  song.name.length - 1)}</span></li>`;
         songs.insertAdjacentHTML('beforeend', data);
         song.source = (window.URL || window.webkitURL).createObjectURL(file);
         list_song.push(song);
