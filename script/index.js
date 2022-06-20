@@ -1,8 +1,9 @@
-let songs = document.querySelector('.songs');
-let audio = document.querySelector('audio');
-let loop_btn = document.querySelector('#loop-btn');
-let autoplay_btn = document.querySelector('#autoplay-btn');
-let add_btn = document.querySelector('#add-btn');
+const songs = document.querySelector('.songs');
+const audio = document.querySelector('audio');
+const loop_btn = document.querySelector('#loop-btn');
+const autoplay_btn = document.querySelector('#autoplay-btn');
+const add_btn = document.querySelector('#add-btn');
+const contextMenu = document.querySelector('.content-wrapper');
 let looping = true;
 var index = 0;
 var list_song = [];
@@ -26,7 +27,7 @@ add_btn.onchange = () => {
     } else alert(`${file.name} bukanlah sebuah lagu.`);
 };
 
-function selectSong(e){
+function selectSong(e) {
     document.querySelectorAll(".selected-song").forEach(element => element.classList.remove("selected-song"));
     e.classList.add("selected-song");
     for (let i = 0; i < songs.childNodes.length; i++){
@@ -65,5 +66,13 @@ audio.onended = () => {
     if (songs.childNodes.length - 1 > index) {
         index++;
         selectSong(songs.childNodes[index].children[0]);
-    } else if (looping && index >= songs.childNodes.length - 1) selectSong(songs.childNodes[0].children[0]);   
+    } else if (looping && index >= songs.childNodes.length - 1) {
+        selectSong(songs.childNodes[0].children[0]);
+    } else {
+        function unselectSongs() {
+            document.querySelectorAll(".selected-song").forEach(element => element.classList.remove("selected-song"));
+            audio.src = null;
+        }
+        unselectSongs();
+    }
 };
