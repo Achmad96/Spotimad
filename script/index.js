@@ -1,7 +1,7 @@
 let songs = document.querySelector('.songs');
 let audio = document.querySelector('audio');
 let loop_btn = document.querySelector('#loop-btn');
-let auto_btn = document.querySelector('#auto-btn');
+let autoplay_btn = document.querySelector('#autoplay-btn');
 let add_btn = document.querySelector('#add-btn');
 let looping = true;
 var index = 0;
@@ -39,14 +39,14 @@ function selectSong(e){
     if (audio.autoplay && audio.ended) audio.play();
 }
 
-auto_btn.onclick = () => {
+autoplay_btn.onclick = () => {
     if (audio.autoplay) {
         audio.autoplay = false;
-        auto_btn.setAttribute('style','text-decoration: line-through');
+        autoplay_btn.setAttribute('style','text-decoration: line-through');
     } else {
         audio.autoplay = true;
         audio.play();
-        auto_btn.removeAttribute('style');
+        autoplay_btn.removeAttribute('style');
     }
 }
 
@@ -60,7 +60,7 @@ loop_btn.onclick = () => {
     }
 }
 
-audio.onplaying = () => console.log('Playing ' + songs.childNodes[index].children[0].textContent);
+audio.onplaying = () => console.log(`Playing (${songs.childNodes[index].children[0].textContent})`);
 audio.onended = () => {
     if (songs.childNodes.length - 1 > index) {
         index++;
