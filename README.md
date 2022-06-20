@@ -1,6 +1,6 @@
 # Spotimad
 
-### Pemutar msuik sederhana menggunakan **Java Script**
+### Pemutar musik sederhana menggunakan **Java Script**
 
 
 #### Fitur
