@@ -18,9 +18,15 @@ body {
     font-size: 30px;
 }
 
-.songs{            
+.songs{
+    border: 2px solid;
     list-style: none;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    width: 625px;
+    height: 450px;
+    padding: 5px;
+    margin: 5px;
+    overflow: auto;
 }
 
 .songs > li {
@@ -46,7 +52,6 @@ body {
 .buttons {
     display: flex;
     justify-content: center;
-    margin: 10px;
 }
 
 input[type="file"]{
@@ -61,8 +66,8 @@ label, input[type='button'] {
     color: white;
     font-size: 20px;
     border-radius: 30px;
-    min-width: 100px;
     padding: 15px;
+    margin: 5px;
     transition: all .2s ease-in-out;
 }
 
