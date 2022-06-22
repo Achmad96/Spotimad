@@ -95,7 +95,6 @@ label:hover, input[type="button"]:hover {
 }
 
 div.content-wrapper{
-    display: none;
     position: absolute;
     width: 250px;
     border-radius: 10px;
