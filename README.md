@@ -9,5 +9,9 @@ Website ini memiliki beberapa fitur diantaranya adalah sebagai berikut.
 > Memutar ulang sebuah lagu.
 ## Autoplay
 > Memutar lagu secara otomatis.
-## Add file
+## Add spmg
 > Menambahkan lagu kedalam list.
+## Delete song
+> Menghapus lagu dari list.
+## Rename song
+> Mengubah nama lagu.
