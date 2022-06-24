@@ -59,6 +59,7 @@ function showmenus(event, el) {
         songs.removeChild(el.parentNode);
         list_song.splice(index);
     }
+    // rename menu
     document.querySelector('ul.items>li>span#rename').onclick = () => {
         list_song[index].name = prompt('Masukkan nama baru:');
         el.textContent = list_song[index].name;
