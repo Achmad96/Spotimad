@@ -103,9 +103,8 @@ div.content-wrapper{
 }
 
 ul.items {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     background: #ffffff;
-    border-radius: 10px;
     list-style: none;
     margin: 0px;
     padding: 0px;
@@ -113,7 +112,6 @@ ul.items {
 
 ul.items > li {
     padding: 10px;
-    border-radius: 10px;
     height: 20px;
     width: 250px;
     color: #0d1137;
@@ -125,6 +123,6 @@ ul.items > li:hover {
     cursor: default;
     color: #ffffff;
     background: #0d1137;
-    margin-left: 3px;
+    margin-left: 5px;
     transition: all .3s ease-in-out;
 }

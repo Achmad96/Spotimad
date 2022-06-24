@@ -28,23 +28,23 @@ function selectSong(e) {
     e.classList.add("selected-song");
     for (let i = 0; i < songs.childNodes.length; i++){
         if (songs.childNodes[i].children[0] === e){
-            selectedIndex = i;
+            selectedIndex = i;  
             break;
         };
     }
     audio.src = list_song[selectedIndex]?.source;
-    if (audio.autoplay && audio.ended) audio.play();
+    console.log(list_song[selectedIndex]);
 }
 
 function showmenus(event, el) {
     event.preventDefault();
     let x = event.offsetX + getOffset(el).left;
     let y = event.offsetY + getOffset(el).top;
-    let removeIndex = 0;
+    let index = 0;
 
     for (let i = 0; i < songs.childNodes.length; i++){
         if (songs.childNodes[i].children[0] === el){
-            removeIndex = i;
+            index = i;
             break;
         };
     }
@@ -53,27 +53,22 @@ function showmenus(event, el) {
     contextMenu.style.left = `${x}px`;
     contextMenu.style.top = `${y}px`;
 
+    // delete menu
     document.querySelector('ul.items>li>span#delete').onclick = () => {
-
-        function removeSong(){
-            if ( selectedIndex === removeIndex ) {
-                audio.currentTime = 0;
-                audio.pause();
-            }
-            (window.URL || window.webkitURL).revokeObjectURL(list_song[removeIndex].source);
-            el.parentNode.removeChild(el);
-            delete list_song[removeIndex];
-            contextMenu.setAttribute('style', 'display: none;');
-        }
-
-        removeSong();
+        audio.src = '';
+        songs.removeChild(el.parentNode);
+        list_song.splice(index);
+    }
+    document.querySelector('ul.items>li>span#rename').onclick = () => {
+        list_song[index].name = prompt('Masukkan nama baru:');
+        el.textContent = list_song[index].name;
     }
 }
 
 function getOffset( el ) {
     let _x = 0;
     let _y = 0;
-    while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
+    while ( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
           _x += el.offsetLeft - el.scrollLeft;
           _y += el.offsetTop - el.scrollTop;
           el = el.offsetParent;
@@ -104,17 +99,13 @@ loop_btn.onclick = () => {
 
 audio.onplaying = () => console.log(`Playing (${songs.childNodes[selectedIndex].children[0].textContent})`);
 audio.onended = () => {
-    if (songs.childNodes.length - 1 > selectedIndex) {
-        selectedIndex++;
-        selectSong(songs.childNodes[selectedIndex].children[0]);
+    if (audio.autoplay && songs.childNodes.length - 1 > selectedIndex) {
+        selectSong(songs.childNodes[selectedIndex + 1].children[0]);
     } else if (looping && selectedIndex >= songs.childNodes.length - 1) {
         selectSong(songs.childNodes[0].children[0]);
     } else {
-        function unselectSongs() {
-            document.querySelectorAll(".selected-song").forEach(element => element.classList.remove("selected-song"));
-            audio.src = null;
-        }
-        unselectSongs();
+        document.querySelectorAll(".selected-song").forEach(element => element.classList.remove("selected-song"));
+        audio.src = null;
     }
 };
 
