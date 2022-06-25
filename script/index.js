@@ -3,7 +3,7 @@ const audio = document.querySelector('audio');
 const loop_btn = document.querySelector('#loop-btn');
 const autoplay_btn = document.querySelector('#autoplay-btn');
 const add_btn = document.querySelector('#add-btn');
-const contextMenu = document.querySelector('.content-wrapper');
+const content_wrapper = document.querySelector('.content-wrapper');
 let looping = true;
 var selectedIndex = 0;
 var list_song = [];
@@ -13,10 +13,10 @@ add_btn.onchange = () => {
     let file = document.querySelector('input[type=file]').files[0];
     if (file?.type === 'audio/mpeg'){
         let song = {
-            name: file.name,
+            name: file.name.slice(0,  this.name.length - 4),
             source: (window.URL || window.webkitURL).createObjectURL(file)
         };
-        let data = `<li><span onclick=selectSong(this) oncontextmenu=showmenus(event,this)>${song.name.slice(0,  song.name.length - 4)}</span></li>`;
+        let data = `<li><span onclick=selectSong(this) oncontextmenu=showmenus(event,this)>${song.name}</span></li>`;
         songs.insertAdjacentHTML('beforeend', data);
         list_song.push(song);
     } else alert(`${file.name} bukanlah sebuah lagu.`);
@@ -24,7 +24,7 @@ add_btn.onchange = () => {
 
 function selectSong(e) {
     document.querySelectorAll(".selected-song").forEach(element => element.classList.remove("selected-song"));
-    contextMenu.setAttribute('style', 'display: none;')
+    content_wrapper.setAttribute('style', 'display: none;')
     e.classList.add("selected-song");
     for (let i = 0; i < songs.childNodes.length; i++){
         if (songs.childNodes[i].children[0] === e){
@@ -33,7 +33,6 @@ function selectSong(e) {
         };
     }
     audio.src = list_song[selectedIndex]?.source;
-    console.log(list_song[selectedIndex]);
 }
 
 function showmenus(event, el) {
@@ -49,20 +48,32 @@ function showmenus(event, el) {
         };
     }
 
-    contextMenu.removeAttribute('style');
-    contextMenu.style.left = `${x}px`;
-    contextMenu.style.top = `${y}px`;
+    content_wrapper.removeAttribute('style');
+    content_wrapper.style.left = `${x}px`;
+    content_wrapper.style.top = `${y}px`;
 
     // delete menu
-    document.querySelector('ul.items>li>span#delete').onclick = () => {
+    document.querySelector('.items>li>span#delete').onclick = () => {
         audio.src = '';
         songs.removeChild(el.parentNode);
         list_song.splice(index);
     }
+
     // rename menu
-    document.querySelector('ul.items>li>span#rename').onclick = () => {
-        list_song[index].name = prompt('Masukkan nama baru:');
-        el.textContent = list_song[index].name;
+    document.querySelector('.items>li>span#rename').onclick = () => {
+        const rename_wrapper = document.querySelector('.rename-wrapper');
+        const inputText = document.querySelector('.rename-wrapper>input[type="text"]');
+        rename_wrapper.removeAttribute('style');
+        inputText.onkeypress = event => {
+            if ( event.keyCode === 13 ) {
+                if ( inputText.value ) {
+                    list_song[index].name = inputText.value;
+                    el.textContent = inputText.value;
+                    inputText.value = '';
+                }
+                rename_wrapper.setAttribute('style', 'display: none;');
+            }
+        }
     }
 }
 
@@ -111,5 +122,7 @@ audio.onended = () => {
 };
 
 document.querySelector('body').onclick = event => { 
-    if (event.target !== ('ul.songs>li>span')) contextMenu.setAttribute('style', 'display:none;');
+    if (event.target !== ('.songs>li>span')) {
+        content_wrapper.setAttribute('style', 'display: none;');
+    }
 }
