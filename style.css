@@ -13,7 +13,6 @@ div.container {
 
 div.wrapper {
     background-color: #0d1137;
-    place-items: center;
     font-family: Arial, Helvetica, sans-serif;
     padding: 0px;
 }
@@ -125,4 +124,25 @@ ul.items > li:hover {
     background: #0d1137;
     margin-left: 5px;
     transition: all .3s ease-in-out;
+}
+
+div.rename-wrapper {
+    position: absolute;
+    background-color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    border-radius: 10px;
+}
+
+div.rename-wrapper > p {
+    margin-bottom: 0px;
+    margin-top: 15px;
+}
+
+input[type='text'] {
+    background: transparent;
+    border-radius: 10px;
+    border-style: hidden hidden solid hidden;
+    padding: 5px;
+    margin: 20px;
 }
