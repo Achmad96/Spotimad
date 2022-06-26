@@ -1,13 +1,11 @@
 const songs = document.querySelector('.songs');
 const audio = document.querySelector('audio');
 const loop_btn = document.querySelector('#loop-btn');
-const autoplay_btn = document.querySelector('#autoplay-btn');
 const add_btn = document.querySelector('#add-btn');
 const content_wrapper = document.querySelector('.content-wrapper');
 let looping = true;
 var selectedIndex = 0;
 var list_song = [];
-audio.autoplay = true;
 
 add_btn.onchange = () => {
     let file = document.querySelector('input[type=file]').files[0];
@@ -16,35 +14,31 @@ add_btn.onchange = () => {
             name: file.name.slice(0,  this.name.length - 4),
             source: (window.URL || window.webkitURL).createObjectURL(file)
         };
-        let data = `<li><span onclick=selectSong(this) oncontextmenu=showContent(event,this)>${song.name}</span></li>`;
+        let data = `<li onclick=selectSong(this) oncontextmenu=showContent(event,this)>${song.name}</li>`;
         songs.insertAdjacentHTML('beforeend', data);
         list_song.push(song);
+        console.log(list_song);
     } else alert(`${file.name} bukanlah sebuah lagu.`);
 };
 
 function selectSong(el) {
     document.querySelectorAll(".selected-song").forEach(element => element.classList.remove("selected-song"));
-    content_wrapper.setAttribute('style', 'display: none;');
     el.classList.add("selected-song");
-
     songs.childNodes.forEach((e, i) => {
-        if (el === e.children[0]) selectedIndex = i;
+        if (el === e) selectedIndex = i;
     });
     audio.src = list_song[selectedIndex]?.source;
-}
+}   
 
 function showContent(event, el) {
     event.preventDefault();
-    const ptext = document.querySelector('.content-wrapper>p') ;
     let x = event.offsetX + getOffset(el).left;
     let y = event.offsetY + getOffset(el).top;
     let index = 0;
 
     songs.childNodes.forEach((e, i) => {
-        if (el === e.children[0]) index = i;
+        if (el === e) index = i;
     });
-
-    ptext.textContent = `${list_song[index].name}`;
 
     content_wrapper.removeAttribute('style');
     content_wrapper.style.left = x + 'px';
@@ -52,9 +46,10 @@ function showContent(event, el) {
 
     // delete menu
     document.querySelector('.items>li>span#delete').onclick = () => {
-        audio.src = '';
-        songs.removeChild(el.parentNode);
+        if (index === selectedIndex) audio.src = '';
+        songs.removeChild(el);
         list_song.splice(index);
+        console.log(list_song);
     }
 
     // rename menu
@@ -81,34 +76,22 @@ function showContent(event, el) {
     }
 }
 
-autoplay_btn.onclick = () => {
-    if (audio.autoplay) {
-        audio.autoplay = false;
-        autoplay_btn.setAttribute('style','text-decoration: line-through');
-    } else {
-        audio.autoplay = true;
-        autoplay_btn.removeAttribute('style');
-    }
-}
-
 loop_btn.onclick = () => {
-    if (looping) {
-        looping = false;
-        loop_btn.setAttribute('style','text-decoration: line-through');
-    } else {
-        looping = true;
-        loop_btn.removeAttribute('style');
-    }
+    looping = !looping;
+    if ( !looping ) loop_btn.setAttribute('style', 'text-decoration: line-through');
+    else loop_btn.removeAttribute('style');
 }
 
 audio.onended = () => {
-    if (audio.autoplay && songs.childNodes.length - 1 > selectedIndex) {
-        selectSong(songs.childNodes[selectedIndex + 1].children[0]);
-    } else if (looping && selectedIndex >= songs.childNodes.length - 1) {
-        selectSong(songs.childNodes[0].children[0]);
+    if (songs.childNodes.length - 1 > selectedIndex) {
+        selectSong(songs.childNodes[selectedIndex + 1]);
+        audio.play();
+    } else if (looping && selectedIndex === songs.childNodes.length - 1) {
+        selectSong(songs.childNodes[0])
+        audio.play();
     } else {
         document.querySelectorAll(".selected-song").forEach(element => element.classList.remove("selected-song"));
-        audio.src = null;
+        audio.src = '';
     }
 };
 
