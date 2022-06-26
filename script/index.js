@@ -16,41 +16,39 @@ add_btn.onchange = () => {
             name: file.name.slice(0,  this.name.length - 4),
             source: (window.URL || window.webkitURL).createObjectURL(file)
         };
-        let data = `<li><span onclick=selectSong(this) oncontextmenu=showmenus(event,this)>${song.name}</span></li>`;
+        let data = `<li><span onclick=selectSong(this) oncontextmenu=showContent(event,this)>${song.name}</span></li>`;
         songs.insertAdjacentHTML('beforeend', data);
         list_song.push(song);
     } else alert(`${file.name} bukanlah sebuah lagu.`);
 };
 
-function selectSong(e) {
+function selectSong(el) {
     document.querySelectorAll(".selected-song").forEach(element => element.classList.remove("selected-song"));
-    content_wrapper.setAttribute('style', 'display: none;')
-    e.classList.add("selected-song");
-    for (let i = 0; i < songs.childNodes.length; i++){
-        if (songs.childNodes[i].children[0] === e){
-            selectedIndex = i;  
-            break;
-        };
-    }
+    content_wrapper.setAttribute('style', 'display: none;');
+    el.classList.add("selected-song");
+
+    songs.childNodes.forEach((e, i) => {
+        if (el === e.children[0]) selectedIndex = i;
+    });
     audio.src = list_song[selectedIndex]?.source;
 }
 
-function showmenus(event, el) {
+function showContent(event, el) {
     event.preventDefault();
+    const ptext = document.querySelector('.content-wrapper>p') ;
     let x = event.offsetX + getOffset(el).left;
     let y = event.offsetY + getOffset(el).top;
     let index = 0;
 
-    for (let i = 0; i < songs.childNodes.length; i++){
-        if (songs.childNodes[i].children[0] === el){
-            index = i;
-            break;
-        };
-    }
+    songs.childNodes.forEach((e, i) => {
+        if (el === e.children[0]) index = i;
+    });
+
+    ptext.textContent = `${list_song[index].name}`;
 
     content_wrapper.removeAttribute('style');
-    content_wrapper.style.left = `${x}px`;
-    content_wrapper.style.top = `${y}px`;
+    content_wrapper.style.left = x + 'px';
+    content_wrapper.style.top = y + 'px';
 
     // delete menu
     document.querySelector('.items>li>span#delete').onclick = () => {
@@ -63,29 +61,24 @@ function showmenus(event, el) {
     document.querySelector('.items>li>span#rename').onclick = () => {
         const rename_wrapper = document.querySelector('.rename-wrapper');
         const inputText = document.querySelector('.rename-wrapper>input[type="text"]');
+        const submit_btn = document.querySelector('#submit-btn');
+        const close_btn = document.querySelector('#close-btn');
         rename_wrapper.removeAttribute('style');
-        inputText.onkeypress = event => {
-            if ( event.keyCode === 13 ) {
-                if ( inputText.value ) {
-                    list_song[index].name = inputText.value;
-                    el.textContent = inputText.value;
-                    inputText.value = '';
-                }
+        function changeName() {
+            if ( inputText.value ) {
+                list_song[index].name = inputText.value;
+                el.textContent = inputText.value;
+                inputText.value = '';
                 rename_wrapper.setAttribute('style', 'display: none;');
             }
         }
+        inputText.onkeypress = e => { if ( e.keyCode === 13 ) changeName(); }
+        submit_btn.onclick = () => changeName();
+        close_btn.onclick = () => {
+            rename_wrapper.setAttribute('style', 'display: none;');
+            inputText.value = '';
+        }
     }
-}
-
-function getOffset( el ) {
-    let _x = 0;
-    let _y = 0;
-    while ( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
-          _x += el.offsetLeft - el.scrollLeft;
-          _y += el.offsetTop - el.scrollTop;
-          el = el.offsetParent;
-    }
-    return { top: _y, left: _x };
 }
 
 autoplay_btn.onclick = () => {
@@ -94,7 +87,6 @@ autoplay_btn.onclick = () => {
         autoplay_btn.setAttribute('style','text-decoration: line-through');
     } else {
         audio.autoplay = true;
-        audio.play();
         autoplay_btn.removeAttribute('style');
     }
 }
@@ -109,7 +101,6 @@ loop_btn.onclick = () => {
     }
 }
 
-audio.onplaying = () => console.log(`Playing (${songs.childNodes[selectedIndex].children[0].textContent})`);
 audio.onended = () => {
     if (audio.autoplay && songs.childNodes.length - 1 > selectedIndex) {
         selectSong(songs.childNodes[selectedIndex + 1].children[0]);
@@ -122,7 +113,16 @@ audio.onended = () => {
 };
 
 document.querySelector('body').onclick = event => { 
-    if (event.target !== ('.songs>li>span')) {
-        content_wrapper.setAttribute('style', 'display: none;');
+    if (event.target !== ('.songs>li>span')) content_wrapper.setAttribute('style', 'display: none;');
+}
+
+function getOffset( el ) {
+    let _x = 0;
+    let _y = 0;
+    while ( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
+          _x += el.offsetLeft - el.scrollLeft;
+          _y += el.offsetTop - el.scrollTop;
+          el = el.offsetParent;
     }
+    return { top: _y, left: _x };
 }
