@@ -11,18 +11,24 @@
 <body>
     <div class="container">
         <div class="rename-wrapper" style="display: none;">
-            <p>Masukkan nama: </p>
+            <p>Please enter the new name </p>
             <input type="text">
+            <div class="buttons">
+                <input id="close-btn" type="button" value="close">
+                <input id="submit-btn" type="button" value="submit">
+            </div>
         </div>
         <div class="wrapper">
             <p>Spotimad</p>
             <ul class="songs"></ul>
             <div class="buttons">
+                <div class="audio-container">
+                    <i class="audio-icon"></i>
+                </div>
                 <audio controls></audio>
                 <input type="button" id='loop-btn' value="Loop">
                 <input type="button" id='autoplay-btn' value="Autoplay">
-                <label for="add-btn">
-                    Add song
+                <label for="add-btn"> Add song
                     <input type="file" id="add-btn">
                 </label>
             </div>
@@ -30,6 +36,7 @@
     </div>
     
     <div class="content-wrapper" style="display: none;">
+        <p></p>
         <ul class="items">
             <li><span id="rename">Rename</span></li>
             <li><span id="delete">Delete</span></li>
