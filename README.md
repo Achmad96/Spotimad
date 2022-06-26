@@ -7,8 +7,6 @@ Website ini memiliki beberapa fitur diantaranya adalah sebagai berikut.
 
 ## Loop
 > Memutar ulang sebuah lagu.
-## Autoplay
-> Memutar lagu secara otomatis.
 ## Add song
 > Menambahkan lagu kedalam list.
 ## Delete song
