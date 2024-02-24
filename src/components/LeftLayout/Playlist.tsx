@@ -25,7 +25,7 @@ export default function Playlist({ playlist_state }: any) {
     useEffect(() => {
         const callData = async () => {
             if (token !== undefined) {
-                const response = await fetchHandler(token, `/v1/users/${import.meta.env.VITE_USER_ID}/playlists`);
+                const response = await fetchHandler(token, `/v1/users/${import.meta.env.VITE_VERCEL_USER_ID}/playlists`);
                 setListSong(response.data);
                 setPlaylist(response.data);
             }
