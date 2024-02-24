@@ -26,7 +26,7 @@ export default function App() {
             setToken(hashParams.access_token);
         } else {
             const clientId = import.meta.env.VITE_VERCEL_CLIENT_ID as string;
-            const redirectUri = import.meta.env.VITE_VERCEL_CLIENT_ID || "https://spotimad.vercel.app/";
+            const redirectUri = import.meta.env.VITE_VERCEL_REDIRECT_URI || "https://spotimad.vercel.app/";
             window.location.href = `https://accounts.spotify.com/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
         }
     }, []);
